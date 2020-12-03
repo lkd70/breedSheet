@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1= title
+  p Welcome to #{title}- Add/Update User
+  
+  form(action="user", method="post")
+    p Username: 
+      input(type="text", name="username")
+    p Name:
+      input(type="text", name="name")
+    p Password:
+      input(type="password", name="password")
+    p is admin:
+      input(type="checkbox", name="isAdmin")
+    p is breeder:
+      input(type="checkbox", name="isBreeder")
+    input(type="submit" name="Submit")

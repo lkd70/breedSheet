@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  form(action="/requests", method="get")
+    div(class="grid-container")
+      h4(class="text center") View
+      div(class="grid-x grid-padding-x")
+        select(name="breed")
+          each b in breeds
+            option(value=b._id)=b.name
+        input(type="submit" class="button expanded" value="Show Requests")
+
+  if (breed)
+    h2 Requests
+    table(class="stack")
+      thead
+        tr
+          th Requester
+          th Date
+      tbody
+        each request in requests
+          tr
+            td(width="100")=request.name.username
+            td(width="100")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+
+
+block leftmenustuff
+  li
+    a(href="/") Home 
+  li
+    a(href="request") New request

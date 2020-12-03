@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1= title
+  p Welcome to #{title}- Add/Update Breed
+  
+  form(action="breeds", method="post")
+    p Breed name: 
+      input(type="text", name="name")
+    p Server:
+      input(type="text", name="server")
+
+    p Breeder:
+      select(name="breeder")
+        each breeder in breeders
+            if (breeder.username === "NONE")
+                option(selected="selected") NONE 
+            else
+                option #{breeder.name}
+
+    input(type="submit" name="Submit")
+
+
+    if breeds
+      h2 existing breeds:
+      table
+        tr
+            th Name
+            th Server
+            th Breeder
+        each breed in breeds
+          tr  
+            td= breed.name
+            td= breed.server
+            each breeder in breeders
+                if (breeder._id === breed.breeder)
+                    td=breeder.name

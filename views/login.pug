@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form(action="/login", method="post")
+    div(class="grid-container")
+      h4(class="text center") Login
+      div(class="grid-x grid-padding-x")
+        div(class="medium-6 cell")
+          label Username
+            input(type="text", name="username" placeholder="Username")
+            
+        div(class="medium-6 cell")
+          label password
+            input(type="password" name="password" placeholder="Password")
+        
+        input(type="submit" class="button expanded" value="Log in")
+        

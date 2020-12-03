@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  form(action="/request", method="post")
+    div(class="grid-container")
+      h4(class="text center") Make a request
+      div(class="grid-x grid-padding-x")
+        select(name="breed")
+          each breed in breeds
+            option(value=breed._id) #{breed.name}
+        input(type="submit" class="button expanded" value="submit request")
+
+
+block leftmenustuff
+  li
+    a(href="/") Home 
+  li
+    a(href="request") New request
