@@ -16,7 +16,7 @@ block content
             if (breeder.username === "NONE")
                 option(selected="selected") NONE 
             else
-                option #{breeder.name}
+                option #{breeder.username}
 
     input(type="submit" name="Submit")
 
@@ -34,4 +34,4 @@ block content
             td= breed.server
             each breeder in breeders
                 if (breeder._id === breed.breeder)
-                    td=breeder.name
+                    td=breeder.username

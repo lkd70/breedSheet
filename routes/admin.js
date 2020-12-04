@@ -70,6 +70,8 @@ router.post('/breeds', ensureAdmin(), (req, res) => {
                     res.send('Done');
                 }
             })
+        } else {
+            res.send('Error...');
         }
     })
 })
