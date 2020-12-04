@@ -8,6 +8,10 @@ block leftmenustuff
 
 
 block content
+  div(class="grid-x")
+    div(class="cell large-auto")
+      img(src="https://www.dododex.com/media/creature/otter.png", alt="An otter wearing a top hat")
+      p This is a threat
   if (user)
     h2 #{t('greeting')} #{user.username}
     if (user.isBreeder)
