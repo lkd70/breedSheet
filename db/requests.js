@@ -15,8 +15,7 @@ exports.addNewRequest = (req, cb) => {
         } else {
             cb(doc);
         }
-    })
-
+    });
 };
 
 exports.getNewRequestsByBreedId = (breed_id, cb) => {
@@ -31,3 +30,9 @@ exports.getNewRequestsByBreedId = (breed_id, cb) => {
         }
     });
 };
+
+exports.markAsDone = (id, cb) => {
+    db.update({ _id: id}, { $set: { done: true }}, err => {
+        cb(err);
+    });
+}

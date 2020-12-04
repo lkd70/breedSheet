@@ -3,16 +3,16 @@ extends layout
 block content
   form(action="/request", method="post")
     div(class="grid-container")
-      h4(class="text center") Make a request
+      h4(class="text center")=t('new-request')
       div(class="grid-x grid-padding-x")
         select(name="breed")
           each breed in breeds
             option(value=breed._id) #{breed.name}
-        input(type="submit" class="button expanded" value="submit request")
+        input(type="submit" class="button expanded" value=t('submit'))
 
 
 block leftmenustuff
   li
-    a(href="/") Home 
+    a(href="/")=t('home')
   li
-    a(href="request") New request
+    a(href="request")=t('new-request')

@@ -47,3 +47,13 @@ exports.getBreedById = (id, cb) => {
         }
     });
 };
+
+exports.getBreedsByBreederId = (id, cb) => {
+    db.find({ breeder: id }, (err, docs) => {
+        if (err || docs === null) {
+            cb(null);
+        } else {
+            cb(docs);
+        }
+    });
+};

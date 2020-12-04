@@ -2,17 +2,17 @@ extends ../layout
 
 block content
   h1= title
-  p Welcome to #{title}- Add/Update User
+  p #{t('greeting')} - Add/Update User
   
   form(action="user", method="post")
-    p Username: 
+    p=t('ask-username')
       input(type="text", name="username")
-    p Name:
+    p=t('ask-name')
       input(type="text", name="name")
-    p Password:
+    p=t('ask-password')
       input(type="password", name="password")
-    p is admin:
+    p=t('is-admin')
       input(type="checkbox", name="isAdmin")
-    p is breeder:
+    p=t('is-breeder')
       input(type="checkbox", name="isBreeder")
-    input(type="submit" name="Submit")
+    input(type="submit" name=t('submit'))

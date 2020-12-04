@@ -1,12 +1,16 @@
 extends layout
 
-block content
-  if (user)
-    h2 Welcome back #{user.username}
-
-
 block leftmenustuff
   li
-    a(href="requests") View requests
+    a(href="requests")=t('view-requests')
   li
-    a(href="request") New request
+    a(href="request")=t('new-request')
+
+
+block content
+  if (user)
+    h2 #{t('greeting')} #{user.username}
+    if (user.isBreeder)
+      h3=t('your-lines')
+      each breed in breeds
+        a(href="/requests?breed=" + breed._id)=breed.name

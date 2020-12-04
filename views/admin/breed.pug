@@ -2,15 +2,15 @@ extends ../layout
 
 block content
   h1= title
-  p Welcome to #{title}- Add/Update Breed
+  p #{t('greeting')} - Add/Update Breed
   
   form(action="breeds", method="post")
-    p Breed name: 
+    p=t('breed-name')
       input(type="text", name="name")
-    p Server:
+    p=t('server')
       input(type="text", name="server")
 
-    p Breeder:
+    p=t('breeder')
       select(name="breeder")
         each breeder in breeders
             if (breeder.username === "NONE")
@@ -22,12 +22,12 @@ block content
 
 
     if breeds
-      h2 existing breeds:
+      h2=t('existing-breeds')
       table
         tr
-            th Name
-            th Server
-            th Breeder
+            th=t('getname')
+            th=t('getserver')
+            th=t('getbreeder')
         each breed in breeds
           tr  
             td= breed.name

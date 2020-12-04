@@ -3,29 +3,36 @@ extends layout
 block content
   form(action="/requests", method="get")
     div(class="grid-container")
-      h4(class="text center") View
+      h4(class="text center")=t('view')
       div(class="grid-x grid-padding-x")
         select(name="breed")
           each b in breeds
             option(value=b._id)=b.name
-        input(type="submit" class="button expanded" value="Show Requests")
+        input(type="submit" class="button expanded" value=t('show-requests'))
 
   if (breed)
-    h2 Requests
+    h2=t('requests')
     table(class="stack")
       thead
         tr
-          th Requester
-          th Date
+          th=t('requester')
+          th=t('requested')
+          th=t('actions')
       tbody
         each request in requests
           tr
-            td(width="100")=request.name.username
-            td(width="100")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+            td(width="400")=request.name.username
+            if (user && request.user == user._id)
+              td(width="400")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+              td(width="10")
+                a(href="/remove?id=" + request.id)
+                  center ✔️
+            else
+              td(width="800")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
 
 
 block leftmenustuff
   li
-    a(href="/") Home 
+    a(href="/")=t('home') 
   li
-    a(href="request") New request
+    a(href="request")=t('new-request')

@@ -15,10 +15,10 @@ html
       div(class="top-bar-right")
         if (user)
           if (user.isAdmin)
-            a(type='button' class='button' href='/admin') Admin Panel
-          a(type='button' class='button' href='/logout') Logout
+            a(type='button' class='button' href='/admin')=t('admin-panel')
+          a(type='button' class='button' href='/logout')=t('logout')
         else
-          a(type='button' class='button' href='/login') Login
+          a(type='button' class='button' href='/login')=t('login')
 
     div(class="grid-container")
         block content

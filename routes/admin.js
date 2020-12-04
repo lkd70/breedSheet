@@ -18,7 +18,7 @@ const ensureAdmin = () => {
     ]
 };
 
-const title = 'LKD70\'s Breed List - Admin panel';
+const title = 'LKD70s Breed List - Admin panel';
 
 router.get('/', ensureAdmin(),
   (req, res) => {

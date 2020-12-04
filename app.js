@@ -6,6 +6,9 @@ const path = require('path');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const db = require('./db');
+const i18next = require('i18next');
+const Backend = require('i18next-node-fs-backend');
+const i18nextMiddleware = require('i18next-express-middleware');
 
 db.users.addDefaultAdmin();
 
@@ -32,6 +35,17 @@ passport.deserializeUser((id, cb) => {
   });
 });
 
+i18next
+    .use(Backend)
+    .use(i18nextMiddleware.LanguageDetector)
+     .init({
+        backend: {
+            loadPath: './locales/{{lng}}/{{ns}}.json'
+        },
+        fallbackLng: 'en',
+        preload: ['en', 'es']
+    });
+
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 
@@ -43,6 +57,7 @@ app.set('view engine', 'pug');
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
+app.use(i18nextMiddleware.handle(i18next));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
