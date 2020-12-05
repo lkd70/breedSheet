@@ -22,7 +22,7 @@ const title = 'LKD70s Breed List - Admin panel';
 
 router.get('/', ensureAdmin(),
   (req, res) => {
-    res.render('admin/index', { user: req.user, title });
+    res.render('admin/index', { user: req.user, title, messages: req.flash('info') });
 });
 
 router.get('/user', ensureAdmin(), (req, res) => {
@@ -38,9 +38,11 @@ router.post('/user', ensureAdmin(), (req, res) => {
         password: req.body.password
     }, result => {
         if (result === null) {
-            res.send('An error occurred');
+            req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details for user: ' + req.body.username });
+            res.redirect('/admin');
         } else {
-            res.send('added/updated details for ' + req.body.username);
+            req.flash('info', { class: 'success', message: 'Added/updated details for ' + req.body.username });
+            res.redirect('/admin');
         }
     });
 });
@@ -65,13 +67,16 @@ router.post('/breeds', ensureAdmin(), (req, res) => {
                 server: req.body.server,
             }, result => {
                 if (result === null) {
-                    res.send('An error occurred');
+                    req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details for breed: ' + req.body.name });
+                    res.redirect('/admin');
                 } else {
-                    res.send('Done');
+                    req.flash('info', { class: 'success', message: 'Successfully added/updated breed: ' + req.body.name });
+                    res.redirect('/admin');
                 }
             })
         } else {
-            res.send('Error...');
+            req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details - Unable to locate breeder' + req.body.breeder });
+            res.redirect('/admin');
         }
     })
 })

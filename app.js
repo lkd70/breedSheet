@@ -9,15 +9,16 @@ const db = require('./db');
 const i18next = require('i18next');
 const Backend = require('i18next-node-fs-backend');
 const i18nextMiddleware = require('i18next-express-middleware');
+const flash = require('connect-flash');
 
 db.users.addDefaultAdmin();
 
 passport.use(new Strategy(
   ((username, password, cb) => {
     db.users.findByUsername(username, (err, user) => {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password !== password) { return cb(null, false); }
+      if (err) { return cb(err, false, { message: 'Unknown error'}); }
+      if (!user) { return cb(null, false, { message: 'Wrong username/password' }); }
+      if (user.password !== password) { return cb(null, false, { message: 'Wrong username/password' }); }
       return cb(null, user);
     });
   })
@@ -55,8 +56,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-
+app.use(require('express-session')({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true }));
+app.use(flash());
 app.use(i18nextMiddleware.handle(i18next));
 app.use(logger('dev'));
 app.use(express.json());

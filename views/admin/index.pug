@@ -1,6 +1,11 @@
 extends ../layout
 
 block content
+  if (messages)
+    if (messages.length > 0)
+      each message in messages
+        div(class="ms-alert ms-" + message.class)
+          p=message.message
 
 
 block menuitems
