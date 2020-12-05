@@ -3,11 +3,9 @@ extends ../layout
 block content
 
 
-block leftmenustuff
-  li
-    a(href="/")=t('home') 
-  li
-    a(href="admin/user")=t('edit-user')
-  li
-    a(href="admin/breeds")=t('edit-breeds')
-    
+block menuitems
+  a(href="admin/user")
+    li=t('edit-user')
+  a(href="admin/breeds")
+    li=t('edit-breeds')
+  

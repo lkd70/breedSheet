@@ -1,20 +1,30 @@
 extends layout
 
-block leftmenustuff
-  li
-    a(href="requests")=t('view-requests')
-  li
-    a(href="request")=t('new-request')
-
+block menuitems
+  a(href="/requests")
+    li=t('view-requests')
+  a(href="/request")
+    li=t('new-request')
 
 block content
-  div(class="grid-x")
-    div(class="cell large-auto")
-      img(src="https://www.dododex.com/media/creature/otter.png", alt="An otter wearing a top hat")
-      p This is a threat
   if (user)
-    h2 #{t('greeting')} #{user.username}
-    if (user.isBreeder)
-      h3=t('your-lines')
-      each breed in breeds
-        a(href="/requests?breed=" + breed._id)=breed.name
+    div(class="row")
+      div(class="ms-article-title")
+        h2 #{t('greeting')} #{user.username}
+        hr
+      div(class="col-sm")
+        if (user.isBreeder)
+          h3=t('your-lines')
+          each breed in breeds
+            a(href="/requests?breed=" + breed._id)=breed.name
+        hr
+
+  div(class="row")
+    div(class="col-lg-4 col-sm-12")
+      div(class="ms-card")
+        div(class="ms-card-pic")
+          img(src="https://www.dododex.com/media/creature/otter.png", alt="An otter wearing a top hat")
+          div(class="ms-card-pic-stick ms-text-white") * Hat not included
+        div(class="ms-card-title")
+          h2 This is a threat
+          span - Otter with a hat

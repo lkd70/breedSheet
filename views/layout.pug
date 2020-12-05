@@ -2,23 +2,31 @@ doctype html
 html
   head
     title= title
-    meta(http-equiv="x-ua-compatible" content="ie=edge")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel='stylesheet', href='/styles/css/foundation.css')
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width")
+    link(rel='stylesheet', href='/styles/css/minstyle.io.css')
   body
-    div(class="top-bar")
-      div(class="top-bar-left")
-        ul(class="menu" data-menu)
-          li(class="menu-text")=title
-          block leftmenustuff
-          
-      div(class="top-bar-right")
-        if (user)
-          if (user.isAdmin)
-            a(type='button' class='button' href='/admin')=t('admin-panel')
-          a(type='button' class='button' href='/logout')=t('logout')
-        else
-          a(type='button' class='button' href='/login')=t('login')
+    header
+      div(class="ms-menu")
+        div(class="ms-menu-logo")
+          a(href="/" style="text-decoration: none; color: #fff;")
+            p=title
+        div(class="ms-menu-link")
+          input(id="ms-menu-toggle" type="checkbox")
+          input(class="ms-menu-icon" for="ms-menu-toggle")
+          ul
+            block menuitems
+            if (user)
+              if (user.isAdmin)
+                a(href="/admin")=t('admin-panel')
+              a(href="/logout")
+                li Logout
+            else
+              a(href="/login")
+                li Login
 
-    div(class="grid-container")
-        block content
+
+
+  div(class="container")
+    block content
+    script(src="/js/dark.min.js")

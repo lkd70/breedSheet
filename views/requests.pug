@@ -1,38 +1,40 @@
 extends layout
 
 block content
-  form(action="/requests", method="get")
-    div(class="grid-container")
-      h4(class="text center")=t('view')
-      div(class="grid-x grid-padding-x")
-        select(name="breed")
+  div(class="row")
+    hr
+    form(action="/requests", method="get")
+      h2=t('view')
+      br
+      div(class="ms-form-group")
+        select(id="select" name="breed")
           each b in breeds
             option(value=b._id)=b.name
-        input(type="submit" class="button expanded" value=t('show-requests'))
+      div(class="ms-form-group")
+        input(type="submit" class="ms-btn ms-success ms-medium" value=t('show-requests'))
 
   if (breed)
-    h2=t('requests')
-    table(class="stack")
-      thead
-        tr
-          th=t('requester')
-          th=t('requested')
-          th=t('actions')
-      tbody
-        each request in requests
+    div(class="row")
+      h2=t('requests')
+      table(class="ms-table")
+        thead
           tr
-            td(width="400")=request.name.username
-            if (user && request.user == user._id)
-              td(width="400")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
-              td(width="10")
-                a(href="/remove?id=" + request.id)
-                  center ✔️
-            else
-              td(width="800")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+            th=t('requester')
+            th=t('requested')
+            th=t('actions')
+        tbody
+          each request in requests
+            tr
+              td(width="400")=request.name.username
+              if (user && request.user == user._id)
+                td(width="400")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+                td(width="10")
+                  a(href="/remove?id=" + request.id)
+                    center ✔️
+              else
+                td(width="800")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
 
 
-block leftmenustuff
-  li
-    a(href="/")=t('home') 
-  li
-    a(href="request")=t('new-request')
+block menuitems
+  a(href="/request")
+    li=t('new-request')

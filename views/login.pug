@@ -1,17 +1,16 @@
 extends layout
 
 block content
+  h4(class="text center")=t('login')
+  hr
+
   form(action="/login", method="post")
-    div(class="grid-container")
-      h4(class="text center")=t('login')
-      div(class="grid-x grid-padding-x")
-        div(class="medium-6 cell")
-          label=t('ask-username')
-            input(type="text", name="username" placeholder="Username")
-            
-        div(class="medium-6 cell")
-          label=t('ask-password')
-            input(type="password" name="password" placeholder="Password")
-        
-        input(type="submit" class="button expanded" value=t('login'))
+    div(class="row")
+      div(class="col-sm")
+        div(class="ms-form-group")
+          label(for="login")=t('ask-username')
+          input(type="text", name="username" id="login" placeholder="Username")
+          label(for="pass")=t('ask-password')
+          input(type="password" name="password" placeholder="Password")
+        input(type="submit" class="ms-btn ms-success ms-medium ms-fullwidth" style="max-width: 97%;" value=t('login'))
         

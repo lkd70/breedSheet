@@ -11,8 +11,6 @@ block content
         input(type="submit" class="button expanded" value=t('submit'))
 
 
-block leftmenustuff
-  li
-    a(href="/")=t('home')
-  li
-    a(href="request")=t('new-request')
+block menuitems
+  a(href="/requests")
+    li=t('view-requests')
