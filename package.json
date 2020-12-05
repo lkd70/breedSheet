@@ -6,13 +6,15 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/start",
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "translate": "node ./bin/translate"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "http-errors": "^1.7.3",
@@ -28,12 +30,14 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3"
+    "eslint-plugin-react": "^7.14.3",
+    "form-data": "^3.0.0"
   }
 }
