@@ -83,8 +83,10 @@ router.get('/logout',
                 const name = users.find(o => o.id === r.user);
                 return { name, t: r.timestamp, timestamp: formatDateTime(r.timestamp), user: r.user, id: r._id };
               })
+              
+              const breed = breeds.find(b => b._id === req.query.breed);
               requests = requests.sort((a, b) => new Date(a.t) - new Date(b.t)); 
-              res.render('requests', { user: req.user, title, breed: req.query.breed, breeds, requests});
+              res.render('requests', { user: req.user, title, breed, breeds, requests});
             });
           } else {
             res.send('An error occurred');

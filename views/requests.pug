@@ -15,7 +15,7 @@ block content
 
   if (breed)
     div(class="row")
-      h2=t('requests')
+      h2=t('requests') + " - " + breed.name
       table(class="ms-table")
         thead
           tr
@@ -26,7 +26,7 @@ block content
           each request in requests
             tr
               td(width="400")=request.name.username
-              if (user && request.user == user._id)
+              if (user && (request.user == user._id || breed.breeder == user._id || user.isAdmin))
                 td(width="400")=request.timestamp
                 td(width="10")
                   a(href="/remove?id=" + request.id)
