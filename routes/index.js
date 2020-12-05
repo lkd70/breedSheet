@@ -6,6 +6,11 @@ const db = require('../db');
 
 const title = 'LKD70s Breed List';
 
+const formatDateTime = ts => {
+  const d = new Date(ts);
+  return `${d.getFullYear()}/${d.getMonth()}/${d.getDay()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+}
+
 router.get('/',
   (req, res) => {
     if (req.user && req.user.isBreeder) {
@@ -76,9 +81,9 @@ router.get('/logout',
             db.users.getUsernamePerId(users => {
               requests = requests.map(r => {
                 const name = users.find(o => o.id === r.user);
-                return { name, timestamp: r.timestamp, user: r.user, id: r._id };
+                return { name, t: r.timestamp, timestamp: formatDateTime(r.timestamp), user: r.user, id: r._id };
               })
-              requests = requests.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); 
+              requests = requests.sort((a, b) => new Date(a.t) - new Date(b.t)); 
               res.render('requests', { user: req.user, title, breed: req.query.breed, breeds, requests});
             });
           } else {

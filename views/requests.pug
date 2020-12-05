@@ -27,12 +27,12 @@ block content
             tr
               td(width="400")=request.name.username
               if (user && request.user == user._id)
-                td(width="400")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+                td(width="400")=request.timestamp
                 td(width="10")
                   a(href="/remove?id=" + request.id)
                     center ✔️
               else
-                td(width="800")=Date(request.timestamp).toLocaleString('en-GB', { timeZone: 'UTC' })
+                td(width="800")=request.timestamp
 
 
 block menuitems
