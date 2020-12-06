@@ -12,8 +12,8 @@ html
           a(href="/" style="text-decoration: none; color: #fff;")
             p=title
         div(class="ms-menu-link")
-          input(id="ms-menu-toggle" type="checkbox")
-          input(class="ms-menu-icon" for="ms-menu-toggle")
+          input(type="checkbox" id="ms-menu-toggle")
+          label(for="ms-menu-toggle" class="ms-menu-icon") Menu
           ul
             block menuitems
             if (user)
