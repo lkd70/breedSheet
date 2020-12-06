@@ -30,3 +30,27 @@ html
   div(class="container")
     block content
     script(src="/js/dark.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/cookie-notice-js@1.2.0/dist/cookie.notice.min.js")
+    script. 
+        new cookieNoticeJS({
+          'messageLocales': {
+            'en': '<p style="display:inline;"><img src="/images/otter_with_cookie.png" width=100 style="vertical-align:middle">#{t('cookies-agreement')}</P>'
+          },
+          'buttonLocales': {
+            'en': '#{t('button-ok')}'
+          },
+          'cookieNoticePosition':'top',
+          'learnMoreLinkEnabled':true,
+          'learnMoreLinkHref':'https://www.learn-about-cookies.com/',
+          'learnMoreLinkText':{
+              'en': '#{t('button-learn-more')}'
+          },
+          'expiresIn': 365, 
+          'buttonBgColor': '#ff0066',
+          'buttonTextColor': '#fefefe',
+          'noticeBgColor': '#000',
+          'noticeTextColor': '#fff', 
+          'linkColor':'#ff0066'   
+        });
+      const notice = document.getElementById('cookieNotice');
+      notice.style = "position: fixed; top: 0px; left: 0px; right: 0px; background: #25282c none repeat scroll 0% 0%; color: rgb(255, 255, 255); z-index: 999; padding: 10px 5px; text-align: center; font-size: 20px; line-height: 40px;"
