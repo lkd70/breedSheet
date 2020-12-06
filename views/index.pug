@@ -35,12 +35,6 @@ block content
               each request in requests
                 if (request.user == user._id && request.done === false)
                   p=JSON.stringify(request)
-                  tr
-                    td(width="400")=request.breed.name
-                    td(width="400")=request.timestamp
-                    td(width="10")
-                      a(href="/remove?id=" + request._id style="text-decoration: none; color: #fff;")
-                        center ✔️
 
   div(class="row")
     div(class="col-lg-4 col-sm-12")
