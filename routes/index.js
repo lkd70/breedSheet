@@ -13,10 +13,13 @@ const formatDateTime = ts => {
 
 router.get('/',
   (req, res) => {
-    if (req.user && req.user.isBreeder) {
-      db.breeds.getBreedsByBreederId(req.user._id, breeds => {
-        res.render('index', { user: req.user, title, breeds, messages: req.flash('info') });
-      })
+    if (req.user) {
+      db.requests.getAllRequests(requests => {
+        db.breeds.getBreeds(breeds => {
+          requests = requests.map(r => ({ user: r.user, done: r.done, timestamp: formatDateTime(r.timestamp), id: r._id, breed: breeds.find(b => b._id === r.breed) }))
+          res.render('index', { user: req.user, title, breeds, requests, messages: req.flash('info') });
+        })
+      });
     } else {
       res.render('index', { user: req.user, title, messages: req.flash('info') });
     }

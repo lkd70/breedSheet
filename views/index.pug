@@ -22,7 +22,24 @@ block content
           h3=t('your-lines')
           each breed in breeds
             a(href="/requests?breed=" + breed._id)=breed.name
-        hr
+            br
+          hr
+          h3=t('requests')
+          table(class="ms-table")
+            thead
+              tr
+              th=t('breed-name')
+                th=t('requested')
+                th=t('actions')
+            tbody
+              each request in requests
+                if (request.user == user._id && request.done === false)
+                  tr
+                    td(width="400")=request.breed.name
+                    td(width="400")=request.timestamp
+                    td(width="10")
+                      a(href="/remove?id=" + request._id)
+                        center ✔️
 
   div(class="row")
     div(class="col-lg-4 col-sm-12")

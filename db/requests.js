@@ -31,6 +31,13 @@ exports.getNewRequestsByBreedId = (breed_id, cb) => {
     });
 };
 
+exports.getAllRequests = cb => {
+    db.find({}, (err, docs) => {
+        if (err) docs = [];
+        cb(docs);
+    });
+};
+
 exports.markAsDone = (id, cb) => {
     db.update({ _id: id}, { $set: { done: true }}, err => {
         cb(err);
