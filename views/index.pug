@@ -21,8 +21,9 @@ block content
         if (user.isBreeder)
           h3=t('your-lines')
           each breed in breeds
-            a(href="/requests?breed=" + breed._id)=breed.name
-            br
+            if (breed.breeder == user._id)
+              a(href="/requests?breed=" + breed._id)=breed.name
+              br
           hr
           h3=t('requests')
           table(class="ms-table")
