@@ -29,7 +29,7 @@ block content
               if (user && (request.user == user._id || breed.breeder == user._id || user.isAdmin))
                 td(width="400")=request.timestamp
                 td(width="10")
-                  a(href="/remove?id=" + request.id)
+                  a(href="/remove?id=" + request.id style="text-decoration: none; color: #fff;")
                     center ✔️
               else
                 td(width="800")=request.timestamp
