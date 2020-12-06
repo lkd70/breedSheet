@@ -34,6 +34,7 @@ block content
             tbody
               each request in requests
                 if (request.user == user._id && request.done === false)
+                  p=JSON.stringify(request)
                   tr
                     td(width="400")=request.breed.name
                     td(width="400")=request.timestamp
