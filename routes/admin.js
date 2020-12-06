@@ -38,10 +38,10 @@ router.post('/user', ensureAdmin(), (req, res) => {
         password: req.body.password
     }, result => {
         if (result === null) {
-            req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details for user: ' + req.body.username });
+            req.flash('info', { class: 'danger', message: req.t('failed-update-user').repalce('$USER', req.body.username) });
             res.redirect('/admin');
         } else {
-            req.flash('info', { class: 'success', message: 'Added/updated details for ' + req.body.username });
+            req.flash('info', { class: 'success', message: req.t('updated-user').repalce('$USER', req.body.username) });
             res.redirect('/admin');
         }
     });
@@ -67,15 +67,15 @@ router.post('/breeds', ensureAdmin(), (req, res) => {
                 server: req.body.server,
             }, result => {
                 if (result === null) {
-                    req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details for breed: ' + req.body.name });
+                    req.flash('info', { class: 'danger', message: req.t('failed-update-breed').replace('$BREED', req.body.name) });
                     res.redirect('/admin');
                 } else {
-                    req.flash('info', { class: 'success', message: 'Successfully added/updated breed: ' + req.body.name });
+                    req.flash('info', { class: 'success', message: req.t('updated-breed').replace('$BREED', req.body.name) });
                     res.redirect('/admin');
                 }
             })
         } else {
-            req.flash('info', { class: 'danger', message: 'An error occurred whilst updating the details - Unable to locate breeder' + req.body.breeder });
+            req.flash('info', { class: 'danger', message: req.t('unknown-breeder').replace('$BREEDER', req.body.breeder) });
             res.redirect('/admin');
         }
     })

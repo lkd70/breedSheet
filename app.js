@@ -16,9 +16,9 @@ db.users.addDefaultAdmin();
 passport.use(new Strategy(
   ((username, password, cb) => {
     db.users.findByUsername(username, (err, user) => {
-      if (err) { return cb(err, false, { message: 'Unknown error'}); }
-      if (!user) { return cb(null, false, { message: 'Wrong username/password' }); }
-      if (user.password !== password) { return cb(null, false, { message: 'Wrong username/password' }); }
+      if (err) { return cb(err, false, { message: i18next.t('unknown-error')}); }
+      if (!user) { return cb(null, false, { message: i18next.t('wrong-logs') }); }
+      if (user.password !== password) { return cb(null, false, { message: i18next.t('wrong-logs') }); }
       return cb(null, user);
     });
   })

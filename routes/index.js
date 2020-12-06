@@ -25,7 +25,6 @@ router.get('/',
 router.get('/login',
   (req, res) => {
     const messages = req.flash('error').map(m => ({ class: 'danger', message: m}));
-    console.log(messages);
     res.render('login', { title, messages });
   });
 
@@ -56,10 +55,10 @@ router.get('/logout',
       db.requests.markAsDone(req.query.id, err => {
         console.log(err);
       });
-      req.flash('info', { class: 'success', message: 'successfully removed request' });
+      req.flash('info', { class: 'success', message: req.t('request-removed') });
       res.redirect('/');
     } else {
-      req.flash('info', { class: 'danger', message: 'An error occurred whilst removing the request' });
+      req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
       res.redirect('/');
     }
   });
@@ -69,11 +68,13 @@ router.get('/logout',
   (req, res) => {
     db.requests.addNewRequest({ breed: req.body.breed, user: req.user._id}, result => {
       if (result === null) {
-        req.flash('info', { class: 'danger', message: 'An error occurred whilst adding the request' });
+        req.flash('info', { class: 'danger', message: req.t('request-add-error') });
         res.redirect('/');
       } else {
-        req.flash('info', { class: 'success', message: 'You are in the waiting list for ' + req.body.breed});
-        res.redirect('/');
+        db.breeds.getBreedById(req.body.breed, b => {          
+          req.flash('info', { class: 'success', message: req.t('added-to-requests').replace('$BREED', b.name) });
+          res.redirect('/');
+        })
       }
     })
   });
@@ -95,7 +96,7 @@ router.get('/logout',
               res.render('requests', { user: req.user, title, breed, breeds, requests});
             });
           } else {
-            req.flash('info', { class: 'danger', message: 'an error occurred whilst receiving the requests' });
+            req.flash('info', { class: 'danger', message: req.t('requests-fetch-fail') });
             res.redirect('/')
           }
         })
