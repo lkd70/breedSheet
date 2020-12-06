@@ -38,10 +38,10 @@ router.post('/user', ensureAdmin(), (req, res) => {
         password: req.body.password
     }, result => {
         if (result === null) {
-            req.flash('info', { class: 'danger', message: req.t('failed-update-user').repalce('$USER', req.body.username) });
+            req.flash('info', { class: 'danger', message: req.t('failed-update-user').replace('$USER', req.body.username) });
             res.redirect('/admin');
         } else {
-            req.flash('info', { class: 'success', message: req.t('updated-user').repalce('$USER', req.body.username) });
+            req.flash('info', { class: 'success', message: req.t('updated-user').replace('$USER', req.body.username) });
             res.redirect('/admin');
         }
     });
