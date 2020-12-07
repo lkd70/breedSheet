@@ -56,7 +56,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', cookie: { maxAge: 604800000 }, resave: true, saveUninitialized: true }));
 app.use(flash());
 app.use(i18nextMiddleware.handle(i18next));
 app.use(logger('dev'));
