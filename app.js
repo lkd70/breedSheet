@@ -44,7 +44,7 @@ i18next
             loadPath: './locales/{{lng}}/{{ns}}.json'
         },
         fallbackLng: 'en',
-        preload: ['en', 'es']
+        preload: [ 'en', 'es', 'ko', 'pt', 'zh' ]
     });
 
 const indexRouter = require('./routes/index');
