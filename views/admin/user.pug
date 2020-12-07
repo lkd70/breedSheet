@@ -53,8 +53,8 @@ block content
         tr  
           td=u.name
           td=u.username
-          td=u.isAdmin
-          td=u.isBreeder
+          td=u.isAdmin ? "✅" : "⛔"
+          td=u.isBreeder ? "✅" : "⛔"
           td(width="10")
             a(href="?id=" + u._id style="text-decoration: none; color: #fff;") ✏️
             a(href="removeUser?id=" + u._id style="text-decoration: none; color: #fff;") ❌
