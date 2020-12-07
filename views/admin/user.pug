@@ -5,14 +5,56 @@ block content
   p #{t('greeting')} - #{t('edit-user')}
   
   form(action="user", method="post")
+    if (editing)
+      input(type="hidden" name="id" value=editing._id)
     p=t('ask-username')
-      input(type="text", name="username")
+      if (editing)
+        input(type="text", name="username" value=editing.username)
+      else
+        input(type="text", name="username")
     p=t('ask-name')
-      input(type="text", name="name")
+      if (editing)
+        input(type="text", name="name" value=editing.name)
+      else
+        input(type="text", name="name")
     p=t('ask-password')
-      input(type="password", name="password")
+      if (editing)
+        input(type="password", name="password" value=editing.password)
+      else
+        input(type="password", name="password")
     p=t('is-admin')
-      input(type="checkbox", name="isAdmin")
+      if (editing)
+        if (editing.isAdmin)
+          input(type="checkbox", name="isAdmin" checked)
+        else
+          input(type="checkbox", name="isAdmin")
+      else
+        input(type="checkbox", name="isAdmin")
     p=t('is-breeder')
-      input(type="checkbox", name="isBreeder")
+      if (editing)
+        if (editing.isBreeder)
+          input(type="checkbox", name="isBreeder" checked)
+        else
+          input(type="checkbox", name="isBreeder")
+      else
+        input(type="checkbox", name="isBreeder")
     input(type="submit" name=t('submit'))
+
+  if users
+    h2=t('existing-breeds')
+    table
+      tr
+          th=t('getname')
+          th Username
+          th=t('is-admin')
+          th=t('is-breeder')
+          th=t('actions')
+      each u in users
+        tr  
+          td=u.name
+          td=u.username
+          td=u.isAdmin
+          td=u.isBreeder
+          td(width="10")
+            a(href="?id=" + u._id style="text-decoration: none; color: #fff;") ✏️
+            a(href="removeUser?id=" + u._id style="text-decoration: none; color: #fff;") ❌

@@ -2,8 +2,7 @@ const { Router } = require('express');
 
 const router = Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-const usersDb = require('../db/users');
-const breedsDb = require('../db/breeds');
+const db = require('../db');
 
 const ensureAdmin = () => {
     return [
@@ -21,64 +20,147 @@ const ensureAdmin = () => {
 const title = 'LKD70s Breed List - Admin panel';
 
 router.get('/', ensureAdmin(),
-  (req, res) => {
-    res.render('admin/index', { user: req.user, title, messages: req.flash('info') });
-});
+    (req, res) => {
+        res.render('admin/index', { user: req.user, title, messages: req.flash('info') });
+    });
 
 router.get('/user', ensureAdmin(), (req, res) => {
-    res.render('admin/user', { user: req.user, title });
+    db.users.getUsers(users => {
+        if (req.query.id) {
+            db.users.getUserFromId(req.query.id, editing => {
+                res.render('admin/user', {
+                    user: req.user,
+                    title,
+                    users,
+                    editing
+                });
+            })
+        } else {
+            res.render('admin/user', {
+                user: req.user,
+                title,
+                users
+            });
+        }
+    });
 });
 
 router.post('/user', ensureAdmin(), (req, res) => {
-    usersDb.addOrUpdateUser({ 
-        name: req.body.name,
-        username: req.body.username,
-        isAdmin: req.body.isAdmin === 'on',
-        isBreeder: req.body.isBreeder === 'on',
-        password: req.body.password
-    }, result => {
-        if (result === null) {
-            req.flash('info', { class: 'danger', message: req.t('failed-update-user').replace('$USER', req.body.username) });
-            res.redirect('/admin');
+    if (req.body.id) {
+        db.users.updateUserById(req.body.id, {
+            name: req.body.name,
+            username: req.body.username,
+            isAdmin: req.body.isAdmin === 'on',
+            isBreeder: req.body.isBreeder === 'on',
+            password: req.body.password
+        }, err => {
+            if (err) {
+                req.flash('info', { class: 'danger', message: req.t('failed-update-user')
+                    .replace('$USER', req.body.username) });
+                res.redirect('/admin');
+            } else {
+                req.flash('info', { class: 'success', message: req.t('updated-user')
+                    .replace('$USER', req.body.username) });
+                res.redirect('/admin');
+            }
+        });
+    } else {
+        db.users.addOrUpdateUser({
+            name: req.body.name,
+            username: req.body.username,
+            isAdmin: req.body.isAdmin === 'on',
+            isBreeder: req.body.isBreeder === 'on',
+            password: req.body.password
+        }, result => {
+            if (result === null) {
+                req.flash('info', { class: 'danger', message: req.t('failed-update-user')
+                    .replace('$USER', req.body.username) });
+                res.redirect('/admin');
+            } else {
+                req.flash('info', { class: 'success', message: req.t('updated-user')
+                    .replace('$USER', req.body.username) });
+                res.redirect('/admin');
+            }
+        });
+    }
+});
+
+router.get('/breeds', ensureAdmin(), (req, res) => {
+    db.users.getBreeders(breeders => {
+        breeders.push({ name: 'NONE', username: "NONE", _id: "0" });
+        if (req.query.id) {
+            db.breeds.getBreedById(req.query.id, editing => {
+                db.breeds.getBreeds(breeds => {
+                    res.render('admin/breed', { breeders, user: req.user, title, breeds, editing })
+                })
+            });
         } else {
-            req.flash('info', { class: 'success', message: req.t('updated-user').replace('$USER', req.body.username) });
-            res.redirect('/admin');
+            db.breeds.getBreeds(breeds => {
+                res.render('admin/breed', { breeders, user: req.user, title, breeds })
+            })
         }
     });
 });
 
-router.get('/breeds', ensureAdmin(), (req, res) => {
-    usersDb.getBreeders(breeders => {
-        breeders.push({name: 'NONE', username: "NONE", _id: "0"});
-        breedsDb.getBreeds(breeds => {
-            res.render('admin/breed', { breeders, user: req.user, title, breeds })
-        })
-    });
-})
-
 router.post('/breeds', ensureAdmin(), (req, res) => {
-    usersDb.findByUsername(req.body.breeder, (_, ret) => {
+    db.users.findByUsername(req.body.breeder, (_, ret) => {
         let breeder = 0;
         if (ret !== null) {
             breeder = ret._id;
-            breedsDb.addNewBreed({
-                name: req.body.name,
-                breeder,
-                server: req.body.server,
-            }, result => {
-                if (result === null) {
-                    req.flash('info', { class: 'danger', message: req.t('failed-update-breed').replace('$BREED', req.body.name) });
-                    res.redirect('/admin');
-                } else {
-                    req.flash('info', { class: 'success', message: req.t('updated-breed').replace('$BREED', req.body.name) });
-                    res.redirect('/admin');
-                }
-            })
+            if (req.body.id) {
+                db.breeds.updateBreedById(req.body.id, {
+                    name: req.body.name,
+                    breeder,
+                    server: req.body.server,
+                }, err => {
+                    if (err) {
+                        req.flash('info', { class: 'danger', message: req.t('failed-update-breed')
+                        .replace('$BREED', req.body.name) });
+                        res.redirect('/admin');
+                    } else {
+                        req.flash('info', { class: 'success', message: req.t('updated-breed')
+                            .replace('$BREED', req.body.name) });
+                        res.redirect('/admin');
+                    }
+                });
+            } else {
+                db.breeds.addNewBreed({
+                    name: req.body.name,
+                    breeder,
+                    server: req.body.server,
+                }, result => {
+                    if (result === null) {
+                        req.flash('info', { class: 'danger', message: req.t('failed-update-breed')
+                            .replace('$BREED', req.body.name) });
+                        res.redirect('/admin');
+                    } else {
+                        req.flash('info', { class: 'success', message: req.t('updated-breed')
+                            .replace('$BREED', req.body.name) });
+                        res.redirect('/admin');
+                    }
+                })
+            }
         } else {
-            req.flash('info', { class: 'danger', message: req.t('unknown-breeder').replace('$BREEDER', req.body.breeder) });
+            req.flash('info', { class: 'danger', message: req.t('unknown-breeder')
+                .replace('$BREEDER', req.body.breeder) });
             res.redirect('/admin');
         }
     })
-})
+});
+
+router.get('/removeBreed',
+    require('connect-ensure-login').ensureLoggedIn(),
+    (req, res) => {
+        if (req.query.id) {
+            db.breeds.removeById(req.query.id, err => {
+                console.log(err);
+            });
+            req.flash('info', { class: 'success', message: req.t('breed-removed') });
+            res.redirect('/');
+        } else {
+            req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
+            res.redirect('/');
+        }
+    });
 
 module.exports = router;

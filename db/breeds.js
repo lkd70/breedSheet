@@ -1,6 +1,11 @@
 const Datastore = require('nedb');
 const db = new Datastore({ filename: './data/breeds', autoload: true });
 
+
+exports.updateBreedById = (id, details, cb) => {
+    db.update({_id: id}, details, err => cb(err));
+};
+
 exports.addNewBreed = (breed, cb) => {
     db.findOne({ name: breed.name }, (err, doc) => {
         if (err || doc === null) {
@@ -46,6 +51,12 @@ exports.getBreedById = (id, cb) => {
             cb(doc);
         }
     });
+};
+
+exports.removeById = (id, cb) => {
+   db.remove({ _id: id}, {}, err => {
+        cb(err);
+   });
 };
 
 exports.getBreedsByBreederId = (id, cb) => {

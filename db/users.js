@@ -79,6 +79,26 @@ exports.addOrUpdateUser = (details, cb) => {
   })
 };
 
+exports.getUsers = cb => {
+  db.find({}, (err, res) => {
+    if (err || res.length === 0) {
+      cb([]);
+    } else {
+      cb(res);
+    }
+  });
+};
+
+exports.getUserFromId = (id, cb) => {
+  db.findOne({_id: id}, (err, res) => {
+    if (err || res.length === 0) {
+      cb(null);
+    } else {
+      cb(res);
+    }
+  });
+};
+
 exports.getBreeders = cb => {
   db.find({ isBreeder: true }, (err, res) => {
     if (err || res.length === 0) {
@@ -86,5 +106,11 @@ exports.getBreeders = cb => {
     } else {
       cb(res);
     }
+  });
+};
+
+exports.updateUserById = (id, details, cb) => {
+  db.update({_id: id}, details, err => {
+    cb(err);
   })
 };
