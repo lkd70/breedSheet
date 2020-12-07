@@ -16,6 +16,8 @@ html
           label(for="ms-menu-toggle" class="ms-menu-icon") Menu
           ul
             block menuitems
+            li(style="margin-top: 10px")
+              a(class="github-button" id="donate" href="https://github.com/sponsors/LKD70" data-color-scheme="no-preference: dark; light: light; dark: dark;" data-icon="octicon-heart" data-size="large" aria-label="Sponsor @LKD70 on GitHub")=t('donate')
             if (user)
               if (user.isAdmin)
                 a(href="/admin")=t('admin-panel')
@@ -29,6 +31,7 @@ html
 
   div(class="container")
     block content
+    script(async defer src="https://buttons.github.io/buttons.js")
     script(src="/js/dark.min.js")
     script(src="https://cdn.jsdelivr.net/npm/cookie-notice-js@1.2.0/dist/cookie.notice.min.js")
     script. 
@@ -53,4 +56,13 @@ html
           'linkColor':'#ff0066'   
         });
       const notice = document.getElementById('cookieNotice');
-      notice.style = "position: fixed; top: 0px; left: 0px; right: 0px; background: #25282c none repeat scroll 0% 0%; color: rgb(255, 255, 255); z-index: 999; padding: 10px 5px; text-align: center; font-size: 20px; line-height: 40px;"
+      if (notice) {
+        notice.style = "position: fixed; top: 0px; left: 0px; right: 0px; background: #25282c none repeat scroll 0% 0%; color: rgb(255, 255, 255); z-index: 999; padding: 10px 5px; text-align: center; font-size: 20px; line-height: 40px;"
+      }
+
+    script.
+      const donate = document.getElementById('donate');
+      const themecookie = document.cookie.split(";")
+        .filter(c => c.split("=")[0].trim() === 'theme')
+        .map(c => c.split('='))
+      if (themecookie.length) donate.setAttribute('data-color-scheme', themecookie[0][1]);
