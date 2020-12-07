@@ -57,11 +57,11 @@ router.post('/user', ensureAdmin(), (req, res) => {
             if (err) {
                 req.flash('info', { class: 'danger', message: req.t('failed-update-user')
                     .replace('$USER', req.body.username) });
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             } else {
                 req.flash('info', { class: 'success', message: req.t('updated-user')
                     .replace('$USER', req.body.username) });
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             }
         });
     } else {
@@ -75,11 +75,11 @@ router.post('/user', ensureAdmin(), (req, res) => {
             if (result === null) {
                 req.flash('info', { class: 'danger', message: req.t('failed-update-user')
                     .replace('$USER', req.body.username) });
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             } else {
                 req.flash('info', { class: 'success', message: req.t('updated-user')
                     .replace('$USER', req.body.username) });
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             }
         });
     }
@@ -116,11 +116,11 @@ router.post('/breeds', ensureAdmin(), (req, res) => {
                     if (err) {
                         req.flash('info', { class: 'danger', message: req.t('failed-update-breed')
                         .replace('$BREED', req.body.name) });
-                        res.redirect('/admin');
+                        res.redirect('/admin/breeds');
                     } else {
                         req.flash('info', { class: 'success', message: req.t('updated-breed')
                             .replace('$BREED', req.body.name) });
-                        res.redirect('/admin');
+                        res.redirect('/admin/breeds');
                     }
                 });
             } else {
@@ -132,18 +132,18 @@ router.post('/breeds', ensureAdmin(), (req, res) => {
                     if (result === null) {
                         req.flash('info', { class: 'danger', message: req.t('failed-update-breed')
                             .replace('$BREED', req.body.name) });
-                        res.redirect('/admin');
+                        res.redirect('/admin/breeds');
                     } else {
                         req.flash('info', { class: 'success', message: req.t('updated-breed')
                             .replace('$BREED', req.body.name) });
-                        res.redirect('/admin');
+                        res.redirect('/admin/breeds');
                     }
                 })
             }
         } else {
             req.flash('info', { class: 'danger', message: req.t('unknown-breeder')
                 .replace('$BREEDER', req.body.breeder) });
-            res.redirect('/admin');
+            res.redirect('/admin/breeds');
         }
     })
 });
@@ -156,10 +156,10 @@ router.get('/removeBreed',
                 console.log(err);
             });
             req.flash('info', { class: 'success', message: req.t('breed-removed') });
-            res.redirect('/');
+            res.redirect('/admin/breeds');
         } else {
             req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
-            res.redirect('/');
+            res.redirect('/admin/breeds');
         }
     });
 

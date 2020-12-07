@@ -30,6 +30,11 @@ html
 
 
   div(class="container")
+    if (messages)
+      if (messages.length > 0)
+        each message in messages
+          div(class="ms-alert ms-" + message.class)
+            p=message.message
     block content
     script(async defer src="https://buttons.github.io/buttons.js")
     script(src="/js/dark.min.js")

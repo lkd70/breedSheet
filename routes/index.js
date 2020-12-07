@@ -59,10 +59,10 @@ router.get('/logout',
         console.log(err);
       });
       req.flash('info', { class: 'success', message: req.t('request-removed') });
-      res.redirect('/');
+      res.redirect('/requests');
     } else {
       req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
-      res.redirect('/');
+      res.redirect('/requests');
     }
   });
 
@@ -72,11 +72,11 @@ router.get('/logout',
     db.requests.addNewRequest({ breed: req.body.breed, user: req.user._id}, result => {
       if (result === null) {
         req.flash('info', { class: 'danger', message: req.t('request-add-error') });
-        res.redirect('/');
+        res.redirect('/requests');
       } else {
         db.breeds.getBreedById(req.body.breed, b => {          
           req.flash('info', { class: 'success', message: req.t('added-to-requests').replace('$BREED', b.name) });
-          res.redirect('/');
+          res.redirect('/requests');
         })
       }
     })
