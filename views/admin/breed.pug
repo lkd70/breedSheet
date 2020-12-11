@@ -47,5 +47,7 @@ block content
                 if (breeder._id === breed.breeder)
                     td=breeder.username
             td(width="10")
-              a(href="?id=" + breed._id style="text-decoration: none; color: #fff;") ✏️
-              a(href="removeBreed?id=" + breed._id style="text-decoration: none; color: #fff;") ❌
+              a(href="?id=" + breed.id style="text-decoration: none; color: #fff;")
+                i(class="icon mdi mdi-pencil")
+              a(href="removeUser?id=" + breed.id style="text-decoration: none; color: #fff;")
+                i(class="icon mdi mdi-delete-forever")

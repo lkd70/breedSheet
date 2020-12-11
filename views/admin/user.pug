@@ -22,23 +22,40 @@ block content
         input(type="password", name="password" value=editing.password)
       else
         input(type="password", name="password")
-    p=t('is-admin')
-      if (editing)
-        if (editing.isAdmin)
-          input(type="checkbox", name="isAdmin" checked)
-        else
-          input(type="checkbox", name="isAdmin")
+    if (editing)
+      if (editing.isAdmin)
+        div(class="pretty p-switch p-fill")
+        input(type="checkbox", name="isAdmin" checked)
+        div(class="state p-success")
+          label=t('is-admin')
       else
-        input(type="checkbox", name="isAdmin")
-    p=t('is-breeder')
-      if (editing)
-        if (editing.isBreeder)
+        div(class="pretty p-switch p-fill")
+          input(type="checkbox", name="isAdmin" )
+          div(class="state p-success")
+            label=t('is-admin')
+    else
+      div(class="pretty p-switch p-fill")
+        input(type="checkbox", name="isAdmin" )
+        div(class="state p-success")
+          label=t('is-admin')
+    if (editing)
+      if (editing.isBreeder)
+        div(class="pretty p-switch p-fill")
           input(type="checkbox", name="isBreeder" checked)
-        else
-          input(type="checkbox", name="isBreeder")
+          div(class="state p-success")
+            label=t('is-breeder')
       else
-        input(type="checkbox", name="isBreeder")
-    input(type="submit" name=t('submit'))
+        div(class="pretty p-switch p-fill")
+          input(type="checkbox", name="isBreeder" )
+          div(class="state p-success")
+            label=t('is-breeder')
+    else
+      div(class="pretty p-switch p-fill")
+        input(type="checkbox", name="isBreeder" )
+        div(class="state p-success")
+          label=t('is-breeder')
+  hr
+  input(type="submit" name=t('submit'))
 
   if users
     h2=t('existing-breeds')
@@ -53,8 +70,12 @@ block content
         tr  
           td=u.name
           td=u.username
-          td=u.isAdmin ? "✅" : "⛔"
-          td=u.isBreeder ? "✅" : "⛔"
+          td
+            i(class=u.isAdmin ? "icon mdi mdi-check" : "icon mdi mdi-close")
+          td
+            i(class=u.isBreeder ? "icon mdi mdi-check" : "icon mdi mdi-close")
           td(width="10")
-            a(href="?id=" + u._id style="text-decoration: none; color: #fff;") ✏️
-            a(href="removeUser?id=" + u._id style="text-decoration: none; color: #fff;") ❌
+            a(href="?id=" + u._id style="text-decoration: none; color: #fff;")
+              i(class="icon mdi mdi-pencil")
+            a(href="removeUser?id=" + u._id style="text-decoration: none; color: #fff;")
+              i(class="icon mdi mdi-delete-forever")
