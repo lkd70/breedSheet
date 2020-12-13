@@ -4,7 +4,6 @@ block content
   h1= title
   p #{t('greeting')} - #{t('edit-breeds')}
   
-  
   form(action="breeds", method="post")
     if (editing)
       input(type="hidden" name="id" value=editing._id)
@@ -31,23 +30,23 @@ block content
     input(type="submit" name="Submit")
 
 
-    if breeds
-      h2=t('existing-breeds')
-      table
-        tr
-            th=t('getname')
-            th=t('getserver')
-            th=t('getbreeder')
-            th=t('actions')
-        each breed in breeds
-          tr  
-            td= breed.name
-            td= breed.server
-            each breeder in breeders
-                if (breeder._id === breed.breeder)
-                    td=breeder.username
-            td(width="10")
-              a(href="?id=" + breed.id style="text-decoration: none; color: #fff;")
-                i(class="icon mdi mdi-pencil")
-              a(href="removeUser?id=" + breed.id style="text-decoration: none; color: #fff;")
-                i(class="icon mdi mdi-delete-forever")
+  if breeds
+    h2=t('existing-breeds')
+    table
+      tr
+          th=t('getname')
+          th=t('getserver')
+          th=t('getbreeder')
+          th=t('actions')
+      each breed in breeds
+        tr  
+          td= breed.name
+          td= breed.server
+          each breeder in breeders
+              if (breeder._id === breed.breeder)
+                  td=breeder.username
+          td(width="10")
+            a(href="?id=" + breed.id style="text-decoration: none; color: #fff;")
+              i(class="icon mdi mdi-pencil")
+            a(href="removeUser?id=" + breed.id style="text-decoration: none; color: #fff;")
+              i(class="icon mdi mdi-delete-forever")
