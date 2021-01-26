@@ -29,7 +29,7 @@ block content
                 th=t('actions')
             tbody
               each request in requests
-                if (request.user == user._id && request.done === false && request.breed)
+                if (request.user == user._id && request.done !== true && request.breed)
                   tr
                     td(width="400")=request.breed.name
                     td(width="400")=request.timestamp
