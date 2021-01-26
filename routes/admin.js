@@ -96,7 +96,12 @@ router.get('/breeds', ensureAdmin(), (req, res) => {
             });
         } else {
             db.breeds.getBreeds(breeds => {
-                res.render('admin/breed', { breeders, user: req.user, title, breeds })
+                const breedinfo = breeds.sort((a, b) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
+                res.render('admin/breed', { breeders, user: req.user, title, breeds: breedinfo })
             })
         }
     });
