@@ -14,7 +14,7 @@ block content
         input(type="text", name="name")
     p=t('server')
       if (editing)
-        input(type="text", name="server" value="server")
+        input(type="text", name="server" value=editing.server)
       else
         input(type="text", name="server")
     p=t('breeder')
