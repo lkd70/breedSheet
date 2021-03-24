@@ -39,6 +39,12 @@ exports.getUsernameFromId = (id, cb) => {
   })
 };
 
+exports.removeById = (id, cb) => {
+  db.remove({ _id: id}, {}, err => {
+       cb(err);
+  });
+};
+
 exports.getUsernamePerId = (cb) => {
   db.find({}, (err, docs) => {
     cb(docs.map(d => ({username: d.username, id: d._id})))

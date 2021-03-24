@@ -166,6 +166,22 @@ router.get('/removeBreed',
             req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
             res.redirect('/admin/breeds');
         }
-    });
+});
+
+
+router.get('/removeUser',
+    require('connect-ensure-login').ensureLoggedIn(),
+    (req, res) => {
+        if (req.query.id) {
+            db.users.removeById(req.query.id, err => {
+                console.log(err);
+            });
+            req.flash('info', { class: 'success', message: req.t('user-removed') });
+            res.redirect('/admin/breeds');
+        } else {
+            req.flash('info', { class: 'danger', message: req.t('request-remove-error') });
+            res.redirect('/admin/breeds');
+        }
+});
 
 module.exports = router;
