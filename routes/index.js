@@ -89,10 +89,14 @@ router.get('/logout',
         db.requests.getNewRequestsByBreedId(req.query.breed, requests => {
           if (requests !== null) {
             db.users.getUsernamePerId(users => {
-              requests = requests.map(r => {
+              requests = requests.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+              }).map(r => {
                 const name = users.find(o => o.id === r.user);
                 return { name, t: r.timestamp, timestamp: formatDateTime(r.timestamp), user: r.user, id: r._id };
-              })
+              });
               
               const breed = breeds.find(b => b._id === req.query.breed);
               requests = requests.sort((a, b) => new Date(a.t) - new Date(b.t)); 
